@@ -1,12 +1,12 @@
 package controller;
 
+import javax.management.InvalidAttributeValueException;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
 import model.GroceryInventory;
 import model.GroceryItem;
 import model.GroceryList;
-import model.MyFrame;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -60,19 +60,38 @@ public class GUIDriver {
 		JLabel productNameLabel = new JLabel("Product Name:");
 		productNameLabel.setBounds(60, 45, 300, 100);
 		frame.add(productNameLabel);
-
+		
 		JTextField productNameField = new JTextField(1);
 		productNameField.setBounds(200, 80, 150, 30);
 		frame.add(productNameField);
+		
+		JLabel productNameFieldErrorLabel = new JLabel("");
+		productNameFieldErrorLabel.setBounds(100, 255, 300, 100);
+		frame.add(productNameFieldErrorLabel);
 
 		// Section
 		JLabel productSectionLabel = new JLabel("Product Section:");
 		productSectionLabel.setBounds(60, 85, 300, 100);
 		frame.add(productSectionLabel);
 
-		JTextField productSectionField = new JTextField(1);
-		productSectionField.setBounds(200, 120, 150, 30);
+		JComboBox productSectionField = new JComboBox();
+		productSectionField.setBounds(200, 120, 150, 30);		
+		productSectionField.addItem("Produce");
+		productSectionField.addItem("Meat/Seafood");
+		productSectionField.addItem("Dairy");
+		productSectionField.addItem("Deli");
+		productSectionField.addItem("Frozen");
+		productSectionField.addItem("Canned Goods");
+		productSectionField.addItem("Dry Goods");
+		productSectionField.addItem("Bread");
+		productSectionField.addItem("Cereal");
+		productSectionField.addItem("General");
+		productSectionField.setSelectedIndex(-1);
 		frame.add(productSectionField);
+		
+		JLabel productSectionFieldErrorLabel = new JLabel("");
+		productSectionFieldErrorLabel.setBounds(100, 285, 300, 100);
+		frame.add(productSectionFieldErrorLabel);
 
 		// UPC
 		JLabel productUPCLabel = new JLabel("Product UPC:");
@@ -82,6 +101,10 @@ public class GUIDriver {
 		JTextField productUPCField = new JTextField(1);
 		productUPCField.setBounds(200, 160, 150, 30);
 		frame.add(productUPCField);
+		
+		JLabel productUPCFieldErrorLabel = new JLabel("");
+		productUPCFieldErrorLabel.setBounds(100, 315, 300, 100);
+		frame.add(productUPCFieldErrorLabel);
 
 		// Expiration
 		JLabel productExpDateLabel = new JLabel("Product Expiration:");
@@ -94,7 +117,7 @@ public class GUIDriver {
 		frame.add(productExpMonth);
 
 		JSpinner productExpMonthField = new JSpinner(new SpinnerNumberModel
-				(MONTH_RANGE_START, MONTH_RANGE_START, MONTH_RANGE_END, 1));
+				(current.getMonthValue(), MONTH_RANGE_START, MONTH_RANGE_END, 1));
 		JSpinner.DefaultEditor monthEditor = (JSpinner.DefaultEditor) productExpMonthField.getEditor();
 		monthEditor.getTextField().setEnabled(false);
 		monthEditor.getTextField().setDisabledTextColor(Color.black);
@@ -111,7 +134,7 @@ public class GUIDriver {
 		frame.add(productExpDate);
 
 		JSpinner productExpDateField = new JSpinner(new SpinnerNumberModel
-				(DATE_RANGE_START, DATE_RANGE_START, DATE_RANGE_END, 1));
+				(current.getDayOfMonth(), DATE_RANGE_START, DATE_RANGE_END, 1));
 		JSpinner.DefaultEditor dateEditor = (JSpinner.DefaultEditor) productExpDateField.getEditor();
 		dateEditor.getTextField().setEnabled(false);
 		dateEditor.getTextField().setDisabledTextColor(Color.black);
@@ -128,7 +151,7 @@ public class GUIDriver {
 		frame.add(productExpYear);
 
 		JSpinner productExpYearField = new JSpinner(new SpinnerNumberModel
-				(YEAR_RANGE_START, YEAR_RANGE_START, YEAR_RANGE_END, 1));
+				(current.getYear(), YEAR_RANGE_START, YEAR_RANGE_END, 1));
 		JSpinner.NumberEditor yearEditor = new JSpinner.NumberEditor(productExpYearField, "#");
 		productExpYearField.setEditor(yearEditor);
 		yearEditor.getTextField().setEnabled(false);
@@ -194,21 +217,45 @@ public class GUIDriver {
 					} else if (converted_day > 29 && converted_month == 2) {
 						productExpMonthErrorLabel.setText("This month only has 29 days");
 					}
+					if (productSectionField.getSelectedIndex() == -1) {
+						productSectionFieldErrorLabel.setText("Please select a section for this item");
+					} else {
+						productSectionFieldErrorLabel.setText("");
+					}
+					if (LocalDate.of(converted_year, converted_month, converted_day).isBefore(current)) {
+						productExpMonthErrorLabel.setText("Can not expire before today.");
+						throw new InvalidAttributeValueException();
+					}
+					if(productNameField.getText().length() == 0) {
+						productNameFieldErrorLabel.setText("Please enter a name for the item.");
+						throw new InvalidAttributeValueException();
+					} else {
+						productNameFieldErrorLabel.setText("");
+					}
+					if(productUPCField.getText().length() == 0) {
+						productUPCFieldErrorLabel.setText("Please enter a UPC for the item.");
+						throw new InvalidAttributeValueException();
+					} else {
+						productUPCFieldErrorLabel.setText("");
+					}
 
-					newInv.addItemBack(new GroceryItem(productNameField.getText(), productSectionField.getText(),
+					newInv.addItemBack(new GroceryItem(productNameField.getText(), productSectionField.getSelectedItem().toString(),
 							productUPCField.getText(), LocalDate.of(converted_year, converted_month, converted_day)));
 
 					displayCupboardField.addItem(newInv.checkLast());
 
 					productNameField.setText("");
-					productSectionField.setText("");
+					productSectionField.setSelectedIndex(-1);
 					productUPCField.setText("");
-					productExpMonthField.setValue(1);
-					productExpDateField.setValue(1);
-					productExpYearField.setValue(2024);
+					productExpMonthField.setValue(LocalDate.now().getMonthValue());
+					productExpDateField.setValue(LocalDate.now().getDayOfMonth());
+					productExpYearField.setValue(LocalDate.now().getYear());
 					productExpMonthErrorLabel.setText("");
 					productExpDateErrorLabel.setText("");
 					productExpYearErrorLabel.setText("");
+					productSectionFieldErrorLabel.setText("");
+					productNameFieldErrorLabel.setText("");
+					productUPCFieldErrorLabel.setText("");
 
 				} catch (Exception e2) {
 					
@@ -278,14 +325,19 @@ public class GUIDriver {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				productNameField.setText("");
-				productSectionField.setText("");
+				productSectionField.setSelectedIndex(-1);
 				productUPCField.setText("");
-				productExpMonthField.setValue(1);
-				productExpDateField.setValue(1);
-				productExpYearField.setValue(2024);
+				productExpMonthField.setValue(LocalDate.now().getMonthValue());
+				productExpDateField.setValue(LocalDate.now().getDayOfMonth());
+				productExpYearField.setValue(LocalDate.now().getYear());
 				displayCupboardField.removeAllItems();
-				;
 				displayListField.setText("");
+				productExpMonthErrorLabel.setText("");
+				productExpDateErrorLabel.setText("");
+				productExpYearErrorLabel.setText("");
+				productSectionFieldErrorLabel.setText("");
+				productNameFieldErrorLabel.setText("");
+				productUPCFieldErrorLabel.setText("");
 
 				newInv.clearInv();
 				newList.clearList();

@@ -55,7 +55,6 @@ public class GroceryList {
             /* Move elements of arr[0..i-1], that are
                greater than key, to one position ahead
                of their current position */
-            // array[j].getExpirationDate().isBefore(key.getExpirationDate())
             while (j >= 0 && array[j].getExpirationDate().isAfter(key.getExpirationDate())) {
             	array[j + 1] = array[j];
                 j = j - 1;

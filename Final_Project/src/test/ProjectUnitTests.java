@@ -73,7 +73,7 @@ class ProjectUnitTests {
 	void testGroceryItemToString() {
 		GroceryItem item1 = new GroceryItem("eggs", "Dairy", "111111111111", LocalDate.of(2024, 11, 12));
 
-		assertEquals(item1.toString(),"Name: eggs, Section: Dairy, UPC: 111111111111, Exp Date: 11/12/2024");
+		assertEquals(item1.toString(),"Section: Dairy | eggs | UPC: 111111111111 | Exp Date: 11/12/2024");
 	}
 	// -----------------------------  GroceryInventory Unit Tests  ---------------------------------------
 	@Test

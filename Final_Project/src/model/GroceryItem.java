@@ -81,9 +81,9 @@ public class GroceryItem {
 	@Override
 	public String toString() {
 		String returnString = "";
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/YYYY");
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yyyy");
 
-		returnString = "Name: " + productName + ", Section: " + productSection + ", UPC: " + productUPC + ", Exp Date: " + formatter.format(expirationDate);
+		returnString = "Section: " + productSection + " | " + productName + " | UPC: " + productUPC + " | Exp Date: " + formatter.format(expirationDate);
 
 		
 		return returnString;
