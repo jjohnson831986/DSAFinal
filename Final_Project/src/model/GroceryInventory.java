@@ -68,13 +68,13 @@ public class GroceryInventory {
 		return inventoryList.size();
 	}
 	
-	public void clearInv() {
-	this.inventoryList.clear();
+		public void clearInv() {
+		this.inventoryList.clear();
 		
 	}
 		
 	public void printInventory() {
-		System.out.println("Items in store inventory:");
+		System.out.println("Items in store inventory:"); // probably remove this when converted to webapp
 		for (GroceryItem item : inventoryList) {
 			System.out.println(item.toString());
 		}

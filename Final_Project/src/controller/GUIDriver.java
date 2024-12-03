@@ -212,7 +212,6 @@ public class GUIDriver {
 					int converted_day = (int) (productExpDateField.getValue());
 					int converted_year = (int) (productExpYearField.getValue());
 
-					// validation statements
 					if (converted_day > 30 && monthsWith30Days.contains(converted_month)) {
 						productExpMonthErrorLabel.setText("This month only has 30 days");
 					} else if (converted_day > 29 && converted_month == 2) {
@@ -349,37 +348,35 @@ public class GUIDriver {
 		// button I made to insert stuff for easier/quicker testing
 		// Comments in block comment section can be uncommented to add back
 		
-		/*
-		 * JButton testInsertButton = new JButton("Insert for Testing");
-		 * testInsertButton.setBounds(800, 400, 150, 30); frame.add(testInsertButton);
-		 * 
-		 * testInsertButton.addActionListener(new ActionListener() {
-		 * 
-		 * @Override public void actionPerformed(ActionEvent e) { GroceryItem item1 =
-		 * new GroceryItem("eggs", "Dairy", "111111111111",
-		 * LocalDate.now().plusDays(14)); GroceryItem item2 = new GroceryItem("milk",
-		 * "Dairy", "222222222222", LocalDate.now().plusDays(7)); GroceryItem item3 =
-		 * new GroceryItem("brat buns", "Bread", "333333333333",
-		 * LocalDate.now().plusDays(7)); GroceryItem item4 = new GroceryItem("cheese",
-		 * "Dairy", "444444444444", LocalDate.now().plusDays(21)); GroceryItem item5 =
-		 * new GroceryItem("Ham", "Meat", "555555555555", LocalDate.now().plusDays(10));
-		 * GroceryItem item6 = new GroceryItem("TP", "General", "666666666666",
-		 * LocalDate.now().plusYears(2)); GroceryItem item7 = new
-		 * GroceryItem("sliced bread", "Bread", "777777777777",
-		 * LocalDate.now().plusDays(6)); GroceryItem item8 = new GroceryItem("Beef",
-		 * "Meat", "888888888888", LocalDate.now().plusDays(4));
-		 * 
-		 * newInv.addItemBack(item1); displayCupboardField.addItem(newInv.checkLast());
-		 * newInv.addItemBack(item2); displayCupboardField.addItem(newInv.checkLast());
-		 * newInv.addItemBack(item3); displayCupboardField.addItem(newInv.checkLast());
-		 * newInv.addItemBack(item4); displayCupboardField.addItem(newInv.checkLast());
-		 * newInv.addItemBack(item5); displayCupboardField.addItem(newInv.checkLast());
-		 * newInv.addItemBack(item6); displayCupboardField.addItem(newInv.checkLast());
-		 * newInv.addItemBack(item7); displayCupboardField.addItem(newInv.checkLast());
-		 * newInv.addItemBack(item8); displayCupboardField.addItem(newInv.checkLast());
-		 * 
-		 * } });
-		 */
+		  JButton testInsertButton = new JButton("Insert for Testing");
+		  testInsertButton.setBounds(800, 400, 150, 30); frame.add(testInsertButton);
+		  
+		  testInsertButton.addActionListener(new ActionListener() {
+		  
+		  @Override public void actionPerformed(ActionEvent e) { GroceryItem item1 =
+		  new GroceryItem("eggs", "Dairy", "111111111111",
+		  LocalDate.now().plusDays(14)); GroceryItem item2 = new GroceryItem("milk",
+		  "Dairy", "222222222222", LocalDate.now().plusDays(7)); GroceryItem item3 =
+		  new GroceryItem("brat buns", "Bread", "333333333333",
+		  LocalDate.now().plusDays(7)); GroceryItem item4 = new GroceryItem("cheese",
+		  "Dairy", "444444444444", LocalDate.now().plusDays(21)); GroceryItem item5 =
+		  new GroceryItem("Ham", "Meat", "555555555555", LocalDate.now().plusDays(10));
+		  GroceryItem item6 = new GroceryItem("TP", "General", "666666666666",
+		  LocalDate.now().plusYears(2)); GroceryItem item7 = new
+		  GroceryItem("sliced bread", "Bread", "777777777777",
+		  LocalDate.now().plusDays(6)); GroceryItem item8 = new GroceryItem("Beef",
+		  "Meat", "888888888888", LocalDate.now().plusDays(4));
+		  
+		  newInv.addItemBack(item1); displayCupboardField.addItem(newInv.checkLast());
+		  newInv.addItemBack(item2); displayCupboardField.addItem(newInv.checkLast());
+		  newInv.addItemBack(item3); displayCupboardField.addItem(newInv.checkLast());
+		  newInv.addItemBack(item4); displayCupboardField.addItem(newInv.checkLast());
+		  newInv.addItemBack(item5); displayCupboardField.addItem(newInv.checkLast());
+		  newInv.addItemBack(item6); displayCupboardField.addItem(newInv.checkLast());
+		  newInv.addItemBack(item7); displayCupboardField.addItem(newInv.checkLast());
+		  newInv.addItemBack(item8); displayCupboardField.addItem(newInv.checkLast());
+		  
+		  } });
 		 
 
 		
